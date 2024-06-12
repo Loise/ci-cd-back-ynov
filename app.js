@@ -30,10 +30,11 @@ const User = mongoose.model("User", UserSchema);
  */
 const getAllUsers = (
     async function (req, res, next) {
-      const users = await User.find({})
-      if (!users.length) return res.status(204).json({ message: "empty list" });
+      console.log("toto")
+      //const users = await User.find({})
+      //if (!users.length) return res.status(204).json({ message: "empty list" });
 
-      return res.status(200).json({ utilisateurs: users });
+      return res.status(200).json({ utilisateurs: [] });
     }
   )
  
@@ -43,7 +44,6 @@ const router = express.Router();
 router.route("/").get(getAllUsers);
 
 const app = express();
-const port = process.env.PORT || 8000;
 
 const corsOptions = {
   origin: "http://localhost:3000", 
@@ -54,6 +54,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // api routes
+
+app.get('/', (req, res) => {
+  res.send('Hello World')
+})
+
 app.use("/users", router);
+
 
 module.exports = app;
