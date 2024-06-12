@@ -12,5 +12,10 @@
    "src": "/(.*)",
    "dest": "server.js"
   }
- ]
+ ],
+ "git": {
+    "deploymentEnabled": {
+      "main": false
+    }
+  }
 }
