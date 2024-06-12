@@ -30,9 +30,8 @@ const User = mongoose.model("User", UserSchema);
  */
 const getAllUsers = (
     async function (req, res, next) {
-      console.log("toto")
-      //const users = await User.find({})
-      //if (!users.length) return res.status(204).json({ message: "empty list" });
+      const users = await User.find({})
+      if (!users.length) return res.status(204).json({ message: "empty list" });
 
       return res.status(200).json({ utilisateurs: [] });
     }
