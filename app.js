@@ -32,9 +32,9 @@ const getAllUsers = (
     async function (req, res, next) {
       try {
         const users = await User.find({})
-        if (!users.length) return res.status(204).json({ message: "empty list" });
+        //if (!users.length) return res.status(204).json({ message: "empty list" });
   
-        return res.status(200).json({ utilisateurs: [] });
+        return res.status(200).json({ utilisateurs: users });
       } catch(e) {
         console.log(e);
         throw e;
