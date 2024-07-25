@@ -30,10 +30,15 @@ const User = mongoose.model("User", UserSchema);
  */
 const getAllUsers = (
     async function (req, res, next) {
-      const users = await User.find({})
-      if (!users.length) return res.status(204).json({ message: "empty list" });
-
-      return res.status(200).json({ utilisateurs: [] });
+      try {
+        const users = await User.find({})
+        if (!users.length) return res.status(204).json({ message: "empty list" });
+  
+        return res.status(200).json({ utilisateurs: [] });
+      } catch(e) {
+        console.log(e);
+        throw e;
+      }
     }
   )
  
@@ -54,9 +59,9 @@ app.use(express.json());
 
 // api routes
 
-/*app.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello World')
-})*/
+})
 
 app.use("/users", router);
 
