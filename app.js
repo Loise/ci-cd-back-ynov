@@ -54,9 +54,9 @@ app.use(express.json());
 
 // api routes
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   res.send('Hello World')
-})
+})*/
 
 app.use("/users", router);
 
