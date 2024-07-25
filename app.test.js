@@ -1,52 +1,52 @@
 const request = require("supertest")
 const app = require("./app")
-const mysql = require("mongoose");
+const mongoose = require('mongoose');
+const mockingoose = require('mockingoose');
+
+const model = require('./model/user');
 require("dotenv").config();
 
 
-jest.mock("mongoose");
+//jest.mock("mongoose");
 
 
 describe('GET /users', function () {
-    // let mockDB = mysql;
-    // let connection = {
-    //     query: jest.fn()
-    // }
-    // beforeEach(() => {
-    //     mockDB = {
-    //         createPool: jest.fn()
-    //     };
-    // });
 
-    it("true", function() {
-        expect(true).toBe(true);
-    })
+    it('responds with json', async function () {
+        const _doc = [{
+            _id: '507f191e810c19729de860ea',
+            name: 'name',
+            email: 'name@email.com',
+          }];
+      
+        mockingoose(model).toReturn(_doc, 'find');
 
-    it.skip('responds with json', function (done) {
-        request(app)
+        const response = await request(app)
             .get('/users')
             .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(200, done);
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual({ "utilisateurs": _doc });
     });
 
-    it.skip('responds with json', async function () {
-        // let mockSql = jest.fn().mockResolvedValue([])
-        // mysql.createPool.mockResolvedValue({
-        //     query: mockSql
-        // })
-        // createUser.mockResolvedValue(1)
-        // let pool = mysql.createPool.mockImplementation(() => mysql.createPool({
-        //     host: "",
-        //     database: "",
-        //     user: "",
-        //     password: "",
-        // }));
-        // pool.query.mockImplementation(() => pool.query(""))
+
+    it('responds empty array with json', async function () {
+        mockingoose(model).toReturn([], 'find');
+
         const response = await request(app)
             .get('/users')
             .set('Accept', 'application/json')
         expect(response.status).toEqual(200);
         expect(response.body).toEqual({ "utilisateurs": [] });
+    });
+
+
+
+    it.skip('responds throw an error', async function () {
+        mockingoose(model).toReturn(new Error('something wrong'));
+
+        const response = await request(app)
+            .get('/users')
+            .set('Accept', 'application/json')
+        expect(response).toThrow("something wrong");
     });
 });

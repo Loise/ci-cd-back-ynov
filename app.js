@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
+const User = require('./model/user')
 dotenv.config();
 
 mongoose.set("strictQuery", false);
@@ -15,14 +16,6 @@ async function main() {
   await mongoose.connect(mongoDB);
 }
 
-const Schema = mongoose.Schema;
-
-const UserSchema = new Schema({
-  name: String,
-  lastname: String,
-});
-
-const User = mongoose.model("User", UserSchema);
 
 /**
  * @description Get All note
@@ -32,8 +25,6 @@ const getAllUsers = (
     async function (req, res, next) {
       try {
         const users = await User.find({})
-        //if (!users.length) return res.status(204).json({ message: "empty list" });
-  
         return res.status(200).json({ utilisateurs: users });
       } catch(e) {
         console.log(e);

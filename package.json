@@ -5,6 +5,7 @@
   "main": "server.js",
   "devDependencies": {
     "jest": "^29.7.0",
+    "mockingoose": "^2.16.2",
     "superagent": "^8.1.2",
     "supertest": "^6.3.4",
     "ts-jest": "^29.1.2"
