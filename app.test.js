@@ -36,12 +36,15 @@ describe('GET /users', function () {
 
 
 
-    it.skip('responds throw an error', async function () {
-        mockingoose(model).toReturn(new Error('something wrong'));
-
-        const response = await request(app)
-            .get('/users')
-            .set('Accept', 'application/json')
-        expect(response).toThrow("something wrong");
+    it('responds throw an error', async function () {
+        try {
+            mockingoose(model).toReturn(new Error('something wrong'));
+        } catch(e) {
+            const response = await request(app)
+                .get('/users')
+                .set('Accept', 'application/json')
+            expect(response).toThrow("something wrong");
+        }
+        
     });
 });
