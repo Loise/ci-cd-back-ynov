@@ -1,14 +1,9 @@
 const request = require("supertest")
 const app = require("./app")
-const mongoose = require('mongoose');
 const mockingoose = require('mockingoose');
 
 const model = require('./model/user');
 require("dotenv").config();
-
-
-//jest.mock("mongoose");
-
 
 describe('GET /users', function () {
 
