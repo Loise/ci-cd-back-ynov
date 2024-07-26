@@ -41,7 +41,7 @@ router.route("/").get(getAllUsers);
 const app = express();
 
 const corsOptions = {
-  origin: process.env.FRONT_URL, 
+  origin: "*", 
   optionsSuccessStatus: 200,
 };
 
