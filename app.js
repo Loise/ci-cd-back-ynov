@@ -14,6 +14,8 @@ const mongoDB = process.env.MONGODB_URL;
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
+
+  console.log('Connected to mongo server.');
 }
 
 
@@ -41,7 +43,7 @@ router.route("/").get(getAllUsers);
 const app = express();
 
 const corsOptions = {
-  origin: "*", 
+  origin: process.env.FRONT_URL, 
   optionsSuccessStatus: 200,
 };
 
