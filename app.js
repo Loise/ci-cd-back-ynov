@@ -20,30 +20,46 @@ async function main() {
 
 
 /**
- * @description Get All note
+ * @description Get All users
  * @route GET /utilisateurs
  */
 const getAllUsers = (
-    async function (req, res, next) {
-      try {
-        const users = await User.find({})
-        return res.status(200).json({ utilisateurs: users });
-      } catch(e) {
-        console.log(e);
-        throw e;
-      }
+  async function (req, res, next) {
+    try {
+      const users = await User.find({})
+      return res.status(200).json({ utilisateurs: users });
+    } catch (e) {
+      console.log(e);
+      throw e;
     }
-  )
- 
+  }
+)
+
+/**
+* @description Create one user
+* @route POST /utilisateurs
+*/
+const createUser = (
+  async function (req, res, next) {
+    try {
+      const user = await User.create(req.body);
+      return res.status(200).json(user);
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+)
+
 
 const router = express.Router();
 
-router.route("/").get(getAllUsers);
+router.route("/").get(getAllUsers).post(createUser)
 
 const app = express();
 
 const corsOptions = {
-  origin: process.env.FRONT_URL, 
+  origin: process.env.FRONT_URL,
   optionsSuccessStatus: 200,
 };
 
