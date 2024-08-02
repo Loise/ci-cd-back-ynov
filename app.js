@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
 const User = require('./model/user')
+const { specs, swaggerUi } = require('./swagger');
 dotenv.config();
 
 mongoose.set("strictQuery", false);
@@ -22,6 +23,13 @@ async function main() {
 /**
  * @description Get All users
  * @route GET /utilisateurs
+ * @swagger
+ * /user:
+ *   get:
+ *     summary: Returns all users
+ *     responses:
+ *       200:
+ *         description: A successful response
  */
 const getAllUsers = (
   async function (req, res, next) {
@@ -38,7 +46,14 @@ const getAllUsers = (
 /**
 * @description Create one user
 * @route POST /utilisateurs
-*/
+ * @swagger
+ * /user:
+ *   post:
+ *     summary: Create one user
+ *     responses:
+ *       200:
+ *         description: A successful response
+ */
 const createUser = (
   async function (req, res, next) {
     try {
@@ -75,6 +90,8 @@ app.get('/', (req, res) => {
 })
 
 app.use("/users", router);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 
 
 module.exports = app;
