@@ -8,9 +8,6 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY package-lock.json ./
 
-#RUN npm install mysql2 cors dotenv express
-
-RUN npm install mysql --silent
 RUN npm install jest -g --silent
 
 EXPOSE 8000
