@@ -42,11 +42,13 @@ const getAllUsers = (
 const createUser = (
   async function (req, res, next) {
     try {
-      const user = await User.create(req.body);
-      return res.status(200).json(user);
+      //const user = await User.create(req.body);
+      const user = new User(req.body)
+      await user.save();
+      return res.status(200).json(req.body);
     } catch (e) {
       console.log(e);
-      throw e;
+      return res.status(500).json({error: e.message});
     }
   }
 )

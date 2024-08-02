@@ -5,6 +5,10 @@ const mockingoose = require('mockingoose');
 const model = require('./model/user');
 require("dotenv").config();
 
+beforeEach(() => {
+    mockingoose.resetAll();
+  });
+
 describe('GET /users', function () {
 
     it('responds with json', async function () {
@@ -46,5 +50,35 @@ describe('GET /users', function () {
             expect(response).toThrow("something wrong");
         }
         
+    });
+});
+
+describe('POST /users', function () {
+
+    it('responds with json', async function () {
+        const _doc = {
+            name: 'name',
+            email: 'name@email.com',
+          };
+      
+        mockingoose(model).toReturn(_doc, 'save');
+
+        const response = await request(app)
+            .post('/users')
+            .send(_doc)
+            .set('Accept', 'application/json')
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual(_doc);
+    });
+
+
+
+    it('responds throw an error', async function () {
+        mockingoose(model).toReturn(new Error('something'), 'save');
+        const response = await request(app)
+        .post('/users')
+        .set('Accept', 'application/json')
+        expect(response.status).toEqual(500);
+        expect(response.body).toEqual({error: 'something'});
     });
 });
