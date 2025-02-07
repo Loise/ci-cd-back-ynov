@@ -38,11 +38,11 @@ jobs:
           npm ci
           npm test  
       - name: Build the stack with docker
-        run: docker-compose up -d
+        run: docker compose up -d
       - name: Run e2e tests with cypress
         uses: cypress-io/github-action@v6
       - name: Stop the stack
-        run: docker-compose down
+        run: docker compose down
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
