@@ -1,14 +1,11 @@
 const request = require("supertest")
 const app = require("./app")
 const mockingoose = require('mockingoose');
-
 const model = require('./model/user');
 require("dotenv").config();
-
 beforeEach(() => {
     mockingoose.resetAll();
   });
-
 describe('GET /users', function () {
 
     it('responds with json', async function () {

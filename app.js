@@ -19,7 +19,6 @@ async function main() {
   console.log('Connected to mongo server.');
 }
 
-
 /**
  * @description Get All users
  * @route GET /utilisateurs
