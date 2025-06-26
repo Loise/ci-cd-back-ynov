@@ -9,6 +9,5 @@ COPY package.json ./
 COPY package-lock.json ./
 
 RUN npm install --silent
-RUN npm install jest -g --silent
 
 EXPOSE 8000

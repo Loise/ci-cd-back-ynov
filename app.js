@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
 const User = require('./model/user')
+const Post = require('./model/post')
 const { specs, swaggerUi } = require('./swagger');
 dotenv.config();
 
@@ -67,10 +68,26 @@ const createUser = (
   }
 )
 
+const getAllPosts = (
+  async function (req, res, next) {
+    try {
+      const posts = await Post.find({})
+      return res.status(200).json({ posts });
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+)
 
-const router = express.Router();
 
-router.route("/").get(getAllUsers).post(createUser)
+const userRouter = express.Router();
+
+userRouter.route("/").get(getAllUsers).post(createUser)
+
+const postRouter = express.Router();
+
+postRouter.route("/").get(getAllPosts)
 
 const app = express();
 
@@ -88,7 +105,8 @@ app.get('/', (req, res) => {
   res.send('Hello World')
 })
 
-app.use("/users", router);
+app.use("/users", userRouter);
+app.use("/posts", postRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 
