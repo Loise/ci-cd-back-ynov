@@ -5,11 +5,13 @@ services:
   mongo_db:
     image: mongo
     restart: always
-    volumes:
-      - ./mongo-seed:/docker-entrypoint-initdb.d
-      - mongo-data:/data/db
+    # volumes:
+    #   - ./mongo-seed:/docker-entrypoint-initdb.d
+    #   - mongo-data:/data/db
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: mydatabase
   mongo-express:
     image: mongo-express
     restart: always
@@ -22,11 +24,11 @@ services:
       ME_CONFIG_MONGODB_PORT: 27017
     depends_on:
       - mongo_db
-  # mongo_seed:
-    # build: ./mongo-seed
+  mongo_seed:
+    build: ./mongo-seed
     # etablish connection to another service
-    # links:
-      # - mongo_db
+    links:
+      - mongo_db
   server:
     image: nodejs
     volumes:
